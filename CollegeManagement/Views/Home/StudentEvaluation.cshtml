@@ -1,0 +1,51 @@
+﻿
+<div ng-show="isEditSubjects">
+
+    <md-content layout-padding>
+        <form name="projectForm" ng-submit="saveEvaluation()">
+
+            <table style="width: 100%">
+                <thead>
+                    <tr>
+                        <td><strong>Name</strong></td>
+                        <td><strong>Grade</strong></td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tr ng-repeat="item in studentEvaluation.Data">
+                    <td>{{ item.Name }}</td>
+                    <td>
+                        <md-input-container class="md-block">
+                            <label>Grade</label>
+                            <input type="number" step="any" name="grade" ng-model="item.Grade" min="0" max="20" />
+
+                            <div ng-messages="projectForm.grade.$error" multiple md-auto-hide="false">
+                                    <div ng-message="required">
+                                        This field is required.
+                                    </div>
+
+                                    <div ng-message="min">
+                                        The salary should be between 635€ and 8000€.
+                                    </div>
+
+                                    <div ng-message="max">
+                                        The salary should be between 635€ and 8000€.
+                                    </div>
+                                </div>
+                        </md-input-container>
+                    </td>
+                </tr>
+
+                <tr ng-show="!isViewLoading && studentEvaluation.Data.length == 0">
+                    <td colspan="2" style="text-align: center;">No data</td>
+                </tr>
+
+            </table>
+
+            <md-button type="submit" ng-show="studentEvaluation.Data.length > 0">Save</md-button>
+            <input type="button" ng-click="cancel()" value="Cancel" />
+
+        </form>
+    </md-content>
+
+</div>

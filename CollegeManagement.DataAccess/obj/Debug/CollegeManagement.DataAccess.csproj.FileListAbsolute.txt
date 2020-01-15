@@ -1,0 +1,12 @@
+C:\Users\Tiago\documents\visual studio 2015\Projects\MagniFinance\CollegeManagement.DataAccess\bin\Debug\CollegeManagement.DataAccess.dll.config
+C:\Users\Tiago\documents\visual studio 2015\Projects\MagniFinance\CollegeManagement.DataAccess\bin\Debug\CollegeManagement.DataAccess.dll
+C:\Users\Tiago\documents\visual studio 2015\Projects\MagniFinance\CollegeManagement.DataAccess\bin\Debug\CollegeManagement.DataAccess.pdb
+C:\Users\Tiago\documents\visual studio 2015\Projects\MagniFinance\CollegeManagement.DataAccess\bin\Debug\EntityFramework.dll
+C:\Users\Tiago\documents\visual studio 2015\Projects\MagniFinance\CollegeManagement.DataAccess\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Tiago\documents\visual studio 2015\Projects\MagniFinance\CollegeManagement.DataAccess\bin\Debug\EntityFramework.xml
+C:\Users\Tiago\documents\visual studio 2015\Projects\MagniFinance\CollegeManagement.DataAccess\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Tiago\documents\visual studio 2015\Projects\MagniFinance\CollegeManagement.DataAccess\obj\Debug\CollegeManagement.DataAccess.csprojResolveAssemblyReference.cache
+C:\Users\Tiago\documents\visual studio 2015\Projects\MagniFinance\CollegeManagement.DataAccess\obj\Debug\CollegeManagement.DataAccess.dll
+C:\Users\Tiago\documents\visual studio 2015\Projects\MagniFinance\CollegeManagement.DataAccess\obj\Debug\CollegeManagement.DataAccess.pdb
+C:\Users\Tiago\documents\visual studio 2015\Projects\MagniFinance\CollegeManagement.DataAccess\bin\Debug\Sql\StoredProcs\CountCourseTeachers.sql
+C:\Users\Tiago\documents\visual studio 2015\Projects\MagniFinance\CollegeManagement.DataAccess\bin\Debug\Sql\StoredProcs\CountCourseStudents.sql

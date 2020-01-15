@@ -1,0 +1,90 @@
+﻿
+<div id="content" ng-controller="CoursesController" class="positionFix">
+    <span ng-show="isViewLoading" class="viewLoading">
+        @*<img src="~/Content/images/ng-loader.gif" /> loading...*@
+    </span>
+    
+    <div ng-show="errorMessage" style="width: 100%; text-align: center;" class="errorMessage">{{ errorMessage }}</div>
+    <div ng-show="message" style="width: 100%; text-align: center;" class="message">{{ message }}</div>
+
+    <hr />
+
+    @*<form ng-submit="submitForm()" name="frmCustomer">
+        <div>
+            <label for="email">Customer Name</label>
+            <input type="text" ng-model="cust.CustName" name="cname" placeholder="Enter your name" required ng-minlength="4" ng-maxlength="14" />
+            <span class="error" ng-show="(frmCustomer.$dirty||submitted)&&frmCustomer.cname.$error.required">Customer name is Required</span>
+            <span class="error" ng-show="frmCustomer.$dirty&&frmCustomer.cname.$error.minlength">Minimum length required is 5</span>
+            <span class="error" ng-show="frmCustomer.$dirty&&frmCustomer.cname.$error.maxlength">Minimum length required is 15</span>
+        </div>
+        <div>
+            <label for="email">E-mail address</label>
+            <input type="email" ng-model="cust.CustEmail" name="email" placeholder="Enter your Email" required />
+            <span class="error" ng-show="(frmCustomer.$dirty||submitted)&&frmCustomer.email.$error.required">EmailId is Required!</span>
+            <span class="error" ng-show="(frmCustomer.$dirty||submitted)&&frmCustomer.$error.email">Invalid EmailId!</span>
+        </div>
+        <div>
+            <input type="submit" value="Submit" ng-disabled="myForm.$invalid">
+        </div>
+    </form>*@
+
+    <a href="#" ng-show="!isEdit" ng-click="edit();">New</a>
+
+    <div ng-show="isEdit">
+
+        <md-content layout-padding>
+            <form name="projectForm" ng-submit="save()">
+
+                <input type="hidden" ng-model="course.Id" />
+
+                <md-input-container flex="50">
+                    <label>Name</label>
+                    <input required name="student" ng-model="course.Name" placeholder="Enter course name" ng-maxlength="50">
+                    <div ng-messages="projectForm.course.$error">
+                        <div ng-message="required">This field is required.</div>
+                    </div>
+                </md-input-container>
+
+                <br />
+
+                <md-button type="submit">Save</md-button>
+                <input type="button" ng-click="cancel()" value="Cancel" />
+            </form>
+
+        </md-content>
+    </div>
+
+    <hr />
+
+    <table style="width: 100%" ng-show="!isEdit">
+        <thead>
+            <tr>
+                <td><strong>Courses</strong></td>
+                <td><strong>Teachers</strong></td>
+                <td><strong>Students</strong></td>
+                <td><strong>Grade Average</strong></td>
+                <td></td>
+            </tr>
+        </thead>
+        <tr ng-repeat="item in courses">
+            <td>{{ item.Name }}</td>
+            <td>{{ item.Teachers }}</td>
+            <td>{{ item.Students }}</td>
+            <td>{{ item.AverageGrade }}</td>
+            <td>
+                <a href="#" ng-click="edit(item.Id)">Edit</a>
+                |<a href="#" ng-click="delete($event, item.Id)">Delete</a>
+            </td>
+        </tr>
+
+        <tr ng-show="!isViewLoading && courses.length == 0">
+            <td colspan="5" style="text-align: center;">No data</td>
+        </tr>
+
+    </table>
+
+    <div ng-show="isViewLoading" class="progressMarginTop" layout="row" layout-sm="column" layout-align="space-around">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+
+</div>  

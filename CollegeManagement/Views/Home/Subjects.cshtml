@@ -1,0 +1,79 @@
+﻿
+<div id="content" ng-controller="SubjectsController" class="positionFix">
+    <span ng-show="isViewLoading" class="viewLoading">
+        @*<img src="~/Content/images/ng-loader.gif" /> loading...*@
+    </span>
+
+    <div ng-show="errorMessage" style="width: 100%; text-align: center;" class="errorMessage">{{ errorMessage }}</div>
+    <div ng-show="message" style="width: 100%; text-align: center;" class="message">{{ message }}</div>
+
+    <hr />
+
+    <a href="#" ng-show="!isEdit" ng-click="edit();">New</a>
+
+    <div ng-show="isEdit">
+        <md-content layout-padding>
+            <form name="projectForm" ng-submit="save()">
+
+                <input type="hidden" ng-model="subject.Id" />
+
+                <md-input-container flex="50">
+                    <label>Subject</label>
+                    <input required name="Subjects" ng-model="subject.Name" placeholder="Enter subject name" ng-maxlength="200">
+                    <div ng-messages="projectForm.subject.$error">
+                        <div ng-message="required">This field is required.</div>
+                    </div>
+                </md-input-container>
+
+                <br />
+                <md-input-container>
+                    <label>Teacher</label>
+                    <md-select ng-model="subject.TeacherId">
+                        <md-option><em>None</em></md-option>
+                        <md-option ng-repeat="state in teachers" ng-value="state.Id">
+                            {{ state.Name }}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+
+                <br />
+
+                <md-button type="submit">Save</md-button>
+                <input type="button" ng-click="cancel()" value="Cancel" />
+
+            </form>
+        </md-content>
+    </div>
+
+    <hr />
+
+    <table style="width: 100%" ng-show="!isEdit">
+        <thead>
+            <tr>
+                <td><strong>Name</strong></td>
+                <td><strong>Teacher</strong></td>
+                @*<td><strong>Salary</strong></td>*@
+                <td></td>
+            </tr>
+        </thead>
+        <tr ng-repeat="item in subjects">
+            <td>{{ item.Name }}</td>
+            <td>{{ item.Teacher }}</td>
+            @*<td>{{ item.Salary }}€</td>*@
+            <td>
+                <a href="#" ng-click="edit(item.Id)">Edit</a>
+                |<a href="#" ng-click="delete($event, item.Id)">Delete</a>
+            </td>
+        </tr>
+
+        <tr ng-show="!isViewLoading && subjects.length == 0">
+            <td colspan="4" style="text-align: center;">No data</td>
+        </tr>
+
+    </table>
+
+    <div ng-show="isViewLoading" class="progressMarginTop" layout="row" layout-sm="column" layout-align="space-around">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+
+</div>  

@@ -1,0 +1,453 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CollegeManagement.DataAccess.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CourseSubject">
+          <Key>
+            <PropertyRef Name="CourseId" />
+            <PropertyRef Name="SubjectId" />
+          </Key>
+          <Property Name="CourseId" Type="int" Nullable="false" />
+          <Property Name="SubjectId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="RegistrationNumber" />
+          </Key>
+          <Property Name="RegistrationNumber" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" />
+          <Property Name="DateOfBirth" Type="datetime" />
+          <Property Name="CourseId" Type="int" />
+        </EntityType>
+        <EntityType Name="StudentGrade">
+          <Key>
+            <PropertyRef Name="StudentId" />
+            <PropertyRef Name="SubjectId" />
+            <PropertyRef Name="Year" />
+          </Key>
+          <Property Name="StudentId" Type="int" Nullable="false" />
+          <Property Name="SubjectId" Type="int" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="Grade" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StudentSubject">
+          <Key>
+            <PropertyRef Name="StudentId" />
+            <PropertyRef Name="SubjectId" />
+          </Key>
+          <Property Name="StudentId" Type="int" Nullable="false" />
+          <Property Name="SubjectId" Type="int" Nullable="false" />
+          <Property Name="Grade" Type="decimal" Precision="18" Scale="1" />
+        </EntityType>
+        <EntityType Name="Subject">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TeacherId" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Salary" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" />
+          <Property Name="DateOfBirth" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_CourseSubject_Course">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="CourseSubject" Type="Self.CourseSubject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CourseSubject">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CourseSubject_Subject">
+          <End Role="Subject" Type="Self.Subject" Multiplicity="1" />
+          <End Role="CourseSubject" Type="Self.CourseSubject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subject">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CourseSubject">
+              <PropertyRef Name="SubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentGrade_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="StudentGrade" Type="Self.StudentGrade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="RegistrationNumber" />
+            </Principal>
+            <Dependent Role="StudentGrade">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentGrade_Subject">
+          <End Role="Subject" Type="Self.Subject" Multiplicity="1" />
+          <End Role="StudentGrade" Type="Self.StudentGrade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subject">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StudentGrade">
+              <PropertyRef Name="SubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentSubject_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="StudentSubject" Type="Self.StudentSubject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="RegistrationNumber" />
+            </Principal>
+            <Dependent Role="StudentSubject">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentSubject_Subject">
+          <End Role="Subject" Type="Self.Subject" Multiplicity="1" />
+          <End Role="StudentSubject" Type="Self.StudentSubject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subject">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StudentSubject">
+              <PropertyRef Name="SubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Subject_Teacher">
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="0..1" />
+          <End Role="Subject" Type="Self.Subject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Subject">
+              <PropertyRef Name="TeacherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="CountCourseStudents" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="CountCourseTeachers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="StudentsAverageGrades" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="CollegeManagementDataAccessStoreContainer">
+          <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CourseSubject" EntityType="Self.CourseSubject" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentGrade" EntityType="Self.StudentGrade" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentSubject" EntityType="Self.StudentSubject" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Subject" EntityType="Self.Subject" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teacher" EntityType="Self.Teacher" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CourseSubject_Course" Association="Self.FK_CourseSubject_Course">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="CourseSubject" EntitySet="CourseSubject" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CourseSubject_Subject" Association="Self.FK_CourseSubject_Subject">
+            <End Role="Subject" EntitySet="Subject" />
+            <End Role="CourseSubject" EntitySet="CourseSubject" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentGrade_Student" Association="Self.FK_StudentGrade_Student">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="StudentGrade" EntitySet="StudentGrade" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentGrade_Subject" Association="Self.FK_StudentGrade_Subject">
+            <End Role="Subject" EntitySet="Subject" />
+            <End Role="StudentGrade" EntitySet="StudentGrade" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentSubject_Student" Association="Self.FK_StudentSubject_Student">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="StudentSubject" EntitySet="StudentSubject" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentSubject_Subject" Association="Self.FK_StudentSubject_Subject">
+            <End Role="Subject" EntitySet="Subject" />
+            <End Role="StudentSubject" EntitySet="StudentSubject" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Subject_Teacher" Association="Self.FK_Subject_Teacher">
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="Subject" EntitySet="Subject" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CollegeManagement.DataAccess" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="CountCourseTeachers" ReturnType="Collection(CollegeManagement.DataAccess.CountCourseTeachers_Result)" />
+          <FunctionImport Name="CountCourseStudents" ReturnType="Collection(CollegeManagement.DataAccess.CountCourseStudents_Result)" />
+          <EntitySet Name="Courses" EntityType="CollegeManagement.DataAccess.Course" />
+          <EntitySet Name="Students" EntityType="CollegeManagement.DataAccess.Student" />
+          <EntitySet Name="StudentGrades" EntityType="CollegeManagement.DataAccess.StudentGrade" />
+          <EntitySet Name="Subjects" EntityType="CollegeManagement.DataAccess.Subject" />
+          <EntitySet Name="Teachers" EntityType="CollegeManagement.DataAccess.Teacher" />
+          <AssociationSet Name="FK_StudentGrade_Student" Association="CollegeManagement.DataAccess.FK_StudentGrade_Student">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="StudentGrade" EntitySet="StudentGrades" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentGrade_Subject" Association="CollegeManagement.DataAccess.FK_StudentGrade_Subject">
+            <End Role="Subject" EntitySet="Subjects" />
+            <End Role="StudentGrade" EntitySet="StudentGrades" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Subject_Teacher" Association="CollegeManagement.DataAccess.FK_Subject_Teacher">
+            <End Role="Teacher" EntitySet="Teachers" />
+            <End Role="Subject" EntitySet="Subjects" />
+          </AssociationSet>
+          <AssociationSet Name="CourseSubject" Association="CollegeManagement.DataAccess.CourseSubject">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="Subject" EntitySet="Subjects" />
+          </AssociationSet>
+          <AssociationSet Name="StudentSubject" Association="CollegeManagement.DataAccess.StudentSubject">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="Subject" EntitySet="Subjects" />
+          </AssociationSet>
+          <FunctionImport Name="StudentsAverageGrades" ReturnType="Collection(CollegeManagement.DataAccess.StudentsAverageGrades_Result)" />
+          </EntityContainer>
+        <ComplexType Name="CountCourseTeachers_Result">
+          <Property Type="Int32" Name="CourseId" Nullable="false" />
+          <Property Type="Int32" Name="TeachersCount" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="CountCourseStudents_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="Int32" Name="StudentsCount" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Subjects" Relationship="CollegeManagement.DataAccess.CourseSubject" FromRole="Course" ToRole="Subject" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="RegistrationNumber" />
+          </Key>
+          <Property Name="RegistrationNumber" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
+          <Property Name="CourseId" Type="Int32" />
+          <NavigationProperty Name="StudentGrades" Relationship="CollegeManagement.DataAccess.FK_StudentGrade_Student" FromRole="Student" ToRole="StudentGrade" />
+          <NavigationProperty Name="Subjects" Relationship="CollegeManagement.DataAccess.StudentSubject" FromRole="Student" ToRole="Subject" />
+        </EntityType>
+        <EntityType Name="StudentGrade">
+          <Key>
+            <PropertyRef Name="StudentId" />
+            <PropertyRef Name="SubjectId" />
+            <PropertyRef Name="Year" />
+          </Key>
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="SubjectId" Type="Int32" Nullable="false" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="Grade" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Student" Relationship="CollegeManagement.DataAccess.FK_StudentGrade_Student" FromRole="StudentGrade" ToRole="Student" />
+          <NavigationProperty Name="Subject" Relationship="CollegeManagement.DataAccess.FK_StudentGrade_Subject" FromRole="StudentGrade" ToRole="Subject" />
+        </EntityType>
+        <EntityType Name="Subject">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TeacherId" Type="Int32" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="StudentGrades" Relationship="CollegeManagement.DataAccess.FK_StudentGrade_Subject" FromRole="Subject" ToRole="StudentGrade" />
+          <NavigationProperty Name="Teacher" Relationship="CollegeManagement.DataAccess.FK_Subject_Teacher" FromRole="Subject" ToRole="Teacher" />
+          <NavigationProperty Name="Courses" Relationship="CollegeManagement.DataAccess.CourseSubject" FromRole="Subject" ToRole="Course" />
+          <NavigationProperty Name="Students" Relationship="CollegeManagement.DataAccess.StudentSubject" FromRole="Subject" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Salary" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Subjects" Relationship="CollegeManagement.DataAccess.FK_Subject_Teacher" FromRole="Teacher" ToRole="Subject" />
+        </EntityType>
+        <Association Name="FK_StudentGrade_Student">
+          <End Type="CollegeManagement.DataAccess.Student" Role="Student" Multiplicity="1" />
+          <End Type="CollegeManagement.DataAccess.StudentGrade" Role="StudentGrade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="RegistrationNumber" />
+            </Principal>
+            <Dependent Role="StudentGrade">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentGrade_Subject">
+          <End Type="CollegeManagement.DataAccess.Subject" Role="Subject" Multiplicity="1" />
+          <End Type="CollegeManagement.DataAccess.StudentGrade" Role="StudentGrade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subject">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StudentGrade">
+              <PropertyRef Name="SubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Subject_Teacher">
+          <End Type="CollegeManagement.DataAccess.Teacher" Role="Teacher" Multiplicity="0..1" />
+          <End Type="CollegeManagement.DataAccess.Subject" Role="Subject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Subject">
+              <PropertyRef Name="TeacherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CourseSubject">
+          <End Type="CollegeManagement.DataAccess.Course" Role="Course" Multiplicity="*" />
+          <End Type="CollegeManagement.DataAccess.Subject" Role="Subject" Multiplicity="*" />
+        </Association>
+        <Association Name="StudentSubject">
+          <End Type="CollegeManagement.DataAccess.Student" Role="Student" Multiplicity="*" />
+          <End Type="CollegeManagement.DataAccess.Subject" Role="Subject" Multiplicity="*" />
+        </Association>
+        <ComplexType Name="StudentsAverageGrades_Result">
+          <Property Type="Int32" Name="StudentId" Nullable="false" />
+          <Property Type="Int32" Name="Average" Nullable="true" />
+        </ComplexType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CollegeManagementDataAccessStoreContainer" CdmEntityContainer="Entities">
+          <FunctionImportMapping FunctionImportName="CountCourseTeachers" FunctionName="CollegeManagement.DataAccess.Store.CountCourseTeachers">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CollegeManagement.DataAccess.CountCourseTeachers_Result">
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="TeachersCount" ColumnName="TeachersCount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="CountCourseStudents" FunctionName="CollegeManagement.DataAccess.Store.CountCourseStudents">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CollegeManagement.DataAccess.CountCourseStudents_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="StudentsCount" ColumnName="StudentsCount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="Courses">
+            <EntityTypeMapping TypeName="CollegeManagement.DataAccess.Course">
+              <MappingFragment StoreEntitySet="Course">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="CollegeManagement.DataAccess.Student">
+              <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="RegistrationNumber" ColumnName="RegistrationNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentGrades">
+            <EntityTypeMapping TypeName="CollegeManagement.DataAccess.StudentGrade">
+              <MappingFragment StoreEntitySet="StudentGrade">
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="SubjectId" ColumnName="SubjectId" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subjects">
+            <EntityTypeMapping TypeName="CollegeManagement.DataAccess.Subject">
+              <MappingFragment StoreEntitySet="Subject">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teachers">
+            <EntityTypeMapping TypeName="CollegeManagement.DataAccess.Teacher">
+              <MappingFragment StoreEntitySet="Teacher">
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="CourseSubject" TypeName="CollegeManagement.DataAccess.CourseSubject" StoreEntitySet="CourseSubject">
+            <EndProperty Name="Subject">
+              <ScalarProperty Name="Id" ColumnName="SubjectId" />
+            </EndProperty>
+            <EndProperty Name="Course">
+              <ScalarProperty Name="Id" ColumnName="CourseId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="StudentSubject" TypeName="CollegeManagement.DataAccess.StudentSubject" StoreEntitySet="StudentSubject">
+            <EndProperty Name="Subject">
+              <ScalarProperty Name="Id" ColumnName="SubjectId" />
+            </EndProperty>
+            <EndProperty Name="Student">
+              <ScalarProperty Name="RegistrationNumber" ColumnName="StudentId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="StudentsAverageGrades" FunctionName="CollegeManagement.DataAccess.Store.StudentsAverageGrades">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CollegeManagement.DataAccess.StudentsAverageGrades_Result">
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="Average" ColumnName="Average" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

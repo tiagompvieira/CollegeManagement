@@ -1,0 +1,98 @@
+﻿
+<div id="content" ng-controller="TeachersController" class="positionFix">
+
+    <div ng-show="errorMessage" style="width: 100%; text-align: center;" class="errorMessage">{{ errorMessage }}</div>
+    <div ng-show="message" style="width: 100%; text-align: center;" class="message">{{ message }}</div>
+
+    <hr />
+
+    <a href="#" ng-show="!isEdit" ng-click="edit();">New</a>
+
+    <div ng-show="isEdit">
+        <md-content layout-padding>
+            <form name="projectForm" ng-submit="save()">
+
+                <input type="hidden" ng-model="teacher.Id" />
+
+                <md-input-container flex="50">
+                    <label>Teacher</label>
+                    <input required name="teacher" ng-model="teacher.Name" placeholder="Enter teacher name" ng-maxlength="200">
+                    <div ng-messages="projectForm.teacher.$error">
+                        <div ng-message="required">This field is required.</div>
+                    </div>
+                </md-input-container>
+
+                <br />
+
+                <md-input-container flex-gt-xs style="margin-left: -10px!important;">
+                    <label>Date Of Birth</label>
+                    <md-datepicker required name="dateOfBirth" ng-model="teacher.DateOfBirth" md-min-date="mindate" md-max-date="maxdate" md-placeholder="Enter date"></md-datepicker>
+                    
+                    <div ng-messages="projectForm.dateOfBirth.$error">
+                        <div ng-message="required">This field is required.</div>
+                        <div ng-message="valid">Use a valid date format</div>
+                        <div ng-message="mindate">The teacher should be less that 90.</div>
+                        <div ng-message="maxdate">The teacher should be 21.</div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                    <label>Salary (EUR)</label>
+                    <input required type="number" step="any" name="salary" ng-model="teacher.Salary" min="635" max="8000" />
+
+                    <div ng-messages="projectForm.salary.$error" multiple md-auto-hide="false">
+                        <div ng-message="required">
+                            This field is required.
+                        </div>
+
+                        <div ng-message="min">
+                            The salary should be between 635€ and 8000€.
+                        </div>
+
+                        <div ng-message="max">
+                            The salary should be between 635€ and 8000€.
+                        </div>
+                    </div>
+                </md-input-container>
+
+                <md-button type="submit">Save</md-button>
+                <input type="button" ng-click="cancel()" value="Cancel" />
+
+            </form>
+        </md-content>
+    </div>
+
+    <hr />
+
+    @*<h3>Teachers</h3>*@
+
+    <table style="width: 100%" ng-show="!isEdit">
+        <thead>
+            <tr>
+                <td><strong>Name</strong></td>
+                <td><strong>Data Of Birth</strong></td>
+                <td><strong>Salary</strong></td>
+                <td></td>
+            </tr>
+        </thead>
+        <tr ng-repeat="item in teachers">
+            <td>{{ item.Name }}</td>
+            <td>{{ item.DateOfBirth | date : 'yyyy-MM-dd' }}</td>
+            <td>{{ item.Salary }}€</td>
+            <td>
+                <a href="#" ng-click="edit(item.Id)">Edit</a>
+                |<a href="#" ng-click="delete($event, item.Id)">Delete</a>
+            </td>
+        </tr>
+
+        <tr ng-show="!isViewLoading && teachers.length == 0">
+            <td colspan="4" style="text-align: center;">No data</td>
+        </tr>
+
+    </table>
+
+    <div ng-show="isViewLoading" class="progressMarginTop" layout="row" layout-sm="column" layout-align="space-around">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+
+</div>  

@@ -1,0 +1,89 @@
+﻿
+<div id="content" ng-controller="StudentsController" class="positionFix">
+
+    <div ng-show="errorMessage" style="width: 100%; text-align: center;" class="errorMessage">{{ errorMessage }}</div>
+    <div ng-show="message" style="width: 100%; text-align: center;" class="message">{{ message }}</div>
+
+    <hr />
+
+    <a href="#" ng-show="!isEdit" ng-click="edit();">New</a>
+
+    <div ng-show="isEdit">
+        <md-content layout-padding>
+            <form name="projectForm" ng-submit="save()">
+
+                <input type="hidden" ng-model="student.RegistratioNumber" />
+
+                <md-input-container flex="50">
+                    <label>Name</label>
+                    <input required name="student" ng-model="student.Name" placeholder="Enter student name" ng-maxlength="200">
+                    <div ng-messages="projectForm.student.$error">
+                        <div ng-message="required">This field is required.</div>
+                    </div>
+                </md-input-container>
+
+                <br />
+
+                <md-input-container>
+                    <label>Course</label>
+                    <md-select id="studentCourseId" ng-model="student.CourseId" ng-change="getSubjects(student.CourseId)">
+                        <md-option><em>None</em></md-option>
+                        <md-option ng-repeat="course in courses" ng-value="course.Id">
+                            {{ course.Name }}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+
+                <br />
+
+                <div flex="50" ng-repeat="item in student.Subjects" ng-show="student.CourseId">
+                    <md-checkbox ng-checked="item.Selected" ng-click="toggle(item)">
+                        {{ item.Name }}
+                    </md-checkbox>
+                </div>
+
+                <div ng-show="student.Subjects.length == 0">This course has no subjects</div>
+                    
+                <md-button type="submit">Save</md-button>
+                <input type="button" ng-click="cancel()" value="Cancel" />
+
+            </form>
+
+        </md-content>
+    </div>
+    
+    @Html.Partial("StudentEvaluation")
+
+    <hr />
+
+    <table style="width: 100%" ng-show="!isEdit && !isEditSubjects">
+        <thead>
+            <tr>
+                <td><strong>Number</strong></td>
+                <td><strong>Name</strong></td>
+                <td><strong>Average</strong></td>
+                <td></td>
+            </tr>
+        </thead>
+        <tr ng-repeat="item in students">
+            <td>{{ item.RegistrationNumber }}</td>
+            <td>{{ item.Name }}</td>
+            <td>{{ item.GradeAverage }}</td>
+            <td>
+                <a href="#" ng-click="edit(item.RegistrationNumber)">Edit</a>
+                |<a href="#" ng-click="editSubjects(item.RegistrationNumber)">Subjects</a>
+                |<a href="#" ng-click="delete($event, item.RegistrationNumber)">Delete</a>
+            </td>
+        </tr>
+
+        <tr ng-show="!isViewLoading && students.length == 0">
+            <td colspan="4" style="text-align: center;">No data</td>
+        </tr>
+
+    </table>
+
+    <div ng-show="isViewLoading" class="progressMarginTop" layout="row" layout-sm="column" layout-align="space-around">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+
+</div>  

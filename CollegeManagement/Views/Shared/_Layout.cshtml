@@ -1,0 +1,211 @@
+﻿@*<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>*@
+
+<html>
+
+    <head>
+        <base href="/">
+
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>MagniFinance</title>
+    
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.css">
+
+        <script src="~/Scripts/jquery-1.10.2.min.js"> </script>
+        <script src="~/Scripts/angular.min.js"> </script>
+        <script src="~/Scripts/angular-route.min.js"></script>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-animate.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-aria.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-messages.min.js"></script>
+
+        <!-- Angular Material Library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.js"></script>
+
+        @*<script>
+
+            angular.module('myFormApp', []).controller('CustomerController', function ($scope, $http, $location, $window) {
+                $scope.cust = {};
+                $scope.message = '';
+                $scope.result = "color-default";
+                $scope.isViewLoading = false;
+                //get called when user submits the form
+                $scope.submitForm = function () {
+                    $scope.isViewLoading = true;
+                    console.log('Form is submitted with:', $scope.cust);
+                    //$http service that send or receive data from the remote server
+                    $http(
+                    {
+                        method: 'POST',
+                        url: '/Home/CreateCustomer',
+                        data: $scope.cust
+                    }).success(function (data, status, headers, config) {
+                        $scope.errors = [];
+                        if (data.success === true) {
+                            $scope.cust = {};
+                            $scope.message = 'Form data Submitted!';
+                            $scope.result = "color-green";
+                            $location.path(data.redirectUrl);
+                            $window.location.reload();
+                        }
+                        else {
+                            $scope.errors = data.errors;
+                        }
+                    }).error(function (data, status, headers, config) {
+                        $scope.errors = [];
+                        $scope.message = 'Unexpected Error while saving data!!';
+                    });
+                    $scope.isViewLoading = false;
+                }
+            }).config(function ($locationProvider) {
+                //default = 'false'
+                $locationProvider.html5Mode(true);
+            });
+        </script>*@
+
+        <style>
+            #content label {
+                width: 150px;
+            }
+
+            #content input[type=submit] {
+                margin-left: 154px;
+                width: 120px;
+                padding: 5px 15px;
+                background: #ff6a00;
+                border: 0none;
+                cursor: pointer;
+                color: #fff;
+            }
+
+            .error {
+                color: red;
+            }
+
+            .errorMessage {
+                background-color: red;
+            }
+
+            .message {
+                background-color: #89dd09;
+            }
+
+            .color-default {
+                color: #000;
+            }
+
+            .color-red {
+                color: red;
+            }
+
+            .color-green {
+                color: green;
+            }
+
+            #content input.ng-dirty.ng-invalid {
+                border: 1px solid red;
+                background-color: #fff4f4;
+            }
+
+            .positionFix {
+                margin-top: 50px;
+            }
+
+            .progressMarginTop {
+                margin-top: 10px;
+            }
+
+            /* Angular Material */
+            md-chip {
+                clear: left;
+            }
+
+        </style>
+
+    </head>
+
+    <body ng-app="collegeApp">
+
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("College MF", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/#/home">Courses</a></li>
+                        <li><a href="/#/teachers">Teachers</a></li>
+                        <li><a href="/#/subjects">Subjects</a></li>
+                        <li><a href="/#/students">Students</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container body-content">
+            <div ng-view>
+                @RenderBody()
+            </div>
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - MagniFinance</p>
+            </footer>
+        </div>
+
+        <script src="~/Scripts/App/app.js"></script>
+        <script src="~/Scripts/App/Controllers/CoursesController.js"></script>
+        <script src="~/Scripts/App/Controllers/TeachersController.js"></script>
+        <script src="~/Scripts/App/Controllers/SubjectsController.js"></script>
+        <script src="~/Scripts/App/Controllers/StudentsController.js"></script>
+        @Scripts.Render("~/bundles/bootstrap")
+    </body>
+
+</html>
