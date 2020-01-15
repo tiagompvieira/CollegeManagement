@@ -26,7 +26,7 @@ namespace CollegeManagement.Controllers
 
                     var coursesTeachers = entities.CountCourseTeachers().ToList();
                     var coursesStudents = entities.CountCourseStudents().ToList();
-
+                    var courseAverage = entities.AverageCourseGrade().ToList();
 
                     foreach (var course in response.Data)
                     {
@@ -37,6 +37,10 @@ namespace CollegeManagement.Controllers
                         course.Students = coursesStudents
                             .Where(ct => ct.Id == course.Id).FirstOrDefault()
                             ?.StudentsCount;
+
+                        course.AverageGrade = courseAverage
+                            .Where(cAverage => cAverage.CourseId == course.Id).FirstOrDefault()
+                            ?.Average;
                     }
                 }
 

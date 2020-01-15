@@ -16,7 +16,7 @@ namespace CollegeManagement.Models
         public string Name { get; set; }
         public int? Teachers { get; set; }
         public int? Students { get; set; }
-        public decimal AverageGrade { get; set; }
+        public decimal? AverageGrade { get; set; }
 
         public CoursesSummary()
         {

@@ -53,5 +53,10 @@ namespace CollegeManagement.DataAccess
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<StudentsAverageGrades_Result>("StudentsAverageGrades");
         }
+    
+        public virtual ObjectResult<AverageCourseGrade_Result> AverageCourseGrade()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AverageCourseGrade_Result>("AverageCourseGrade");
+        }
     }
 }

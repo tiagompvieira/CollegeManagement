@@ -54,6 +54,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AverageCourseGrade_Result.cs">
+      <DependentUpon>CollegeEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="CollegeEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -121,6 +124,7 @@
       <DependentUpon>CollegeEntities.edmx</DependentUpon>
       <LastGenOutput>CollegeEntities.cs</LastGenOutput>
     </Content>
+    <Content Include="Sql\StoredProcs\AverageCourseGrades.sql" />
     <Content Include="Sql\StoredProcs\CountCourseTeachers.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

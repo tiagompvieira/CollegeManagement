@@ -150,6 +150,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="AverageCourseGrade" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="CountCourseStudents" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="CountCourseTeachers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="StudentsAverageGrades" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -223,6 +224,7 @@
             <End Role="Subject" EntitySet="Subjects" />
           </AssociationSet>
           <FunctionImport Name="StudentsAverageGrades" ReturnType="Collection(CollegeManagement.DataAccess.StudentsAverageGrades_Result)" />
+          <FunctionImport Name="AverageCourseGrade" ReturnType="Collection(CollegeManagement.DataAccess.AverageCourseGrade_Result)" />
           </EntityContainer>
         <ComplexType Name="CountCourseTeachers_Result">
           <Property Type="Int32" Name="CourseId" Nullable="false" />
@@ -334,6 +336,10 @@
           <Property Type="Int32" Name="StudentId" Nullable="false" />
           <Property Type="Int32" Name="Average" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="AverageCourseGrade_Result">
+          <Property Type="Int32" Name="CourseId" Nullable="true" />
+          <Property Type="Int32" Name="Average" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -423,6 +429,14 @@
             <ResultMapping>
               <ComplexTypeMapping TypeName="CollegeManagement.DataAccess.StudentsAverageGrades_Result">
                 <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="Average" ColumnName="Average" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="AverageCourseGrade" FunctionName="CollegeManagement.DataAccess.Store.AverageCourseGrade">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CollegeManagement.DataAccess.AverageCourseGrade_Result">
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
                 <ScalarProperty Name="Average" ColumnName="Average" />
               </ComplexTypeMapping>
             </ResultMapping>
